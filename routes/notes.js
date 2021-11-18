@@ -1,8 +1,6 @@
 const express = require('express')
 const router = express.Router()
 const note_controller = require('../controller/notes')
-const auth = require('../middleware/auth')
-
 
 router.get("/:id", note_controller.show)
 router.get("/", note_controller.index)
