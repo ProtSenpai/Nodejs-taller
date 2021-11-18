@@ -9,6 +9,7 @@ var usersRouter = require('./routes/users');
 var notesRouter = require('./routes/notes');
 
 var app = express();
+const db = require("./config/mongoose")
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
