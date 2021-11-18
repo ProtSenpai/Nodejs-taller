@@ -1,9 +1,12 @@
 const Note = require('../model/notes')
 
-exports.create = (req,res,next) => {
+
+exports.create = async (req,res,next) => {
+    
    let note = new Note({
     tittle: req.body.tittle,
-    comment: req.body.comment
+    comment: req.body.comment,
+    user: currentUser.userName
 
    })
 
@@ -15,12 +18,19 @@ exports.create = (req,res,next) => {
    })
 }
 
-exports.index = (req, res, next) =>{
+exports.index = async (req, res, next) =>{
 
     Note.find({},(err,notes) => {
         if(err)
-            return next(err)
-        res.send(notes)
+            return next(err) 
+        
+        const notesU = []
+        notes.map((object) =>{
+            if(object.user === currentUser.userName){
+                notesU.push(object)
+            }
+        })    
+        res.send(notesU)
     })
 }
 
