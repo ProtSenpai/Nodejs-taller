@@ -6,7 +6,7 @@ exports.create = async (req,res,next) => {
    let note = new Note({
     tittle: req.body.tittle,
     comment: req.body.comment,
-    user: currentUser.userName
+    user: req.body.user
 
    })
 
@@ -39,7 +39,7 @@ exports.show = (req, res, next) =>{
     Note.findById(req.params.id,(err,note) => {
         if(err)
             return next(err)
-        if(req.user.username == note.username){
+        if(req.user.userName == note.user){
             res.send(note)
         }else{
             return res.status(401).send("you can't do that!")
