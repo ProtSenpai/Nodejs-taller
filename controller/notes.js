@@ -20,7 +20,7 @@ exports.create = async (req,res,next) => {
 
 exports.index = async (req, res, next) =>{
 
-    Note.find({},(err,notes) => {
+    Note.find({username: req.user.username},(err,notes) => {
         if(err)
             return next(err) 
         
@@ -39,7 +39,11 @@ exports.show = (req, res, next) =>{
     Note.findById(req.params.id,(err,note) => {
         if(err)
             return next(err)
-        res.send(note)
+        if(req.user.username == note.username){
+            res.send(note)
+        }else{
+            return res.status(401).send("you can't do that!")
+        }
     })
 }
 
